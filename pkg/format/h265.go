@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/bluenviron/mediacommon/pkg/codecs/h265"
@@ -32,7 +33,7 @@ func (f *H265) unmarshal(ctx *unmarshalContext) error {
 		switch key {
 		case "sprop-vps":
 			var err error
-			f.VPS, err = base64.StdEncoding.DecodeString(val)
+			f.VPS, err = base64.StdEncoding.DecodeString(strings.Split(val, ",")[0])
 			if err != nil {
 				return fmt.Errorf("invalid sprop-vps (%v)", ctx.fmtp)
 			}
@@ -42,7 +43,7 @@ func (f *H265) unmarshal(ctx *unmarshalContext) error {
 
 		case "sprop-sps":
 			var err error
-			f.SPS, err = base64.StdEncoding.DecodeString(val)
+			f.SPS, err = base64.StdEncoding.DecodeString(strings.Split(val, ",")[0])
 			if err != nil {
 				return fmt.Errorf("invalid sprop-sps (%v)", ctx.fmtp)
 			}
@@ -58,7 +59,7 @@ func (f *H265) unmarshal(ctx *unmarshalContext) error {
 
 		case "sprop-pps":
 			var err error
-			f.PPS, err = base64.StdEncoding.DecodeString(val)
+			f.PPS, err = base64.StdEncoding.DecodeString(strings.Split(val, ",")[0])
 			if err != nil {
 				return fmt.Errorf("invalid sprop-pps (%v)", ctx.fmtp)
 			}
